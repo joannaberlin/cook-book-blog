@@ -39,14 +39,15 @@ const optTitleSelector = '.post-title';
 const optTitleListSelector = '.titles';
 
 function generateTitleLinks(){
+
+  const titleList = document.querySelector(optTitleListSelector);
   /* remove contents of titleList */
-  document.querySelector(optTitleListSelector).innerHTML = '';
+  titleList.innerHTML = '';
 
   /* find all the articles and save them to variable: articles */
   const articles = document.querySelectorAll(optArticleSelector);
 
   let html = '';
-  const titleList = document.querySelector('.list');
 
   for(let article of articles){
     /* get the article id */

@@ -4,8 +4,10 @@
 
 $color-light: #fff;
 $color-dark: #444;
+$color-vivid: #1d552a;
+$color-focus:  #02d232;
 
-$font-logo: 'Sacramento', cursive;
+$font-logo: 'Barlow', sans-serif;
 $font-header: 'Oswald', sans-serif;
 $font-text: 'Source Sans Pro', sans-serif;
 
@@ -16,6 +18,7 @@ $font-text: 'Source Sans Pro', sans-serif;
 }
 
 body {
+  // background: $color-light;
   background: $color-light;
   font-family: $font-text;
   color: $color-dark;
@@ -25,7 +28,7 @@ body {
 }
 
 .container {
-  max-width: 1140px;
+  max-width: 90vw;
   margin: 0 auto;
 }
 
@@ -46,6 +49,7 @@ body {
 .wrapper {
   display: flex;
   margin-left: 10px;
+  padding-bottom: 50px;
 }
 
 .sidebar {
@@ -53,7 +57,7 @@ body {
 }
 
 .posts {
-  flex: 2 0 0;
+  flex: 4 0 0;
   position: relative;
   padding: 40px;
   overflow: auto;
@@ -76,10 +80,11 @@ body {
 
 .logo {
   font-family: $font-logo;
-  font-weight: 400;
-  font-size: 104px;
+  font-weight: bold;
+  font-size: 100px;
   line-height: 1;
   text-align: center;
+  margin: 40px 0;
 }
 
 /* Lists */
@@ -96,6 +101,14 @@ body {
 .list-horizontal {
   li {
     display: inline-block;
+  }
+}
+
+.list a {
+  color: $color-vivid;
+  font-weight: 600;
+  &:focus {
+    color: $color-focus;
   }
 }
 

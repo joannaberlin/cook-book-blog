@@ -3,12 +3,12 @@
 /* Variables */
 
 $color-light: #fff;
-$color-dark: #444;
-$color-vivid: #1d552a;
-$color-focus:  #02d232;
+$color-dark: #000000;
+$color-vivid: #2a5924;
+$color-focus:  #3bfd37;
 
-$font-logo: 'Barlow', sans-serif;
-$font-header: 'Oswald', sans-serif;
+$font-logo: 'Oswald', sans-serif;
+$font-header: 'Alkalami', serif;
 $font-text: 'Source Sans Pro', sans-serif;
 
 /* Global */
@@ -18,7 +18,6 @@ $font-text: 'Source Sans Pro', sans-serif;
 }
 
 body {
-  // background: $color-light;
   background: $color-light;
   font-family: $font-text;
   color: $color-dark;
@@ -27,13 +26,17 @@ body {
   line-height: 1.7;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .container {
   max-width: 90vw;
   margin: 0 auto;
 }
 
 .section-title {
-  font-size: 22px;
+  font-size: 20px;
   text-transform: uppercase;
   font-family: $font-header;
   font-weight: 600;
@@ -42,6 +45,14 @@ body {
     font-weight: 400;
     color: lighten($color-dark, 20%);
   }
+}
+
+a {
+  text-decoration: none;
+}
+
+article {
+  padding-bottom: 50px;
 }
 
 /* Layout */
@@ -57,26 +68,30 @@ body {
 }
 
 .posts {
-  flex: 4 0 0;
+  flex: 6 0 0;
   position: relative;
   padding: 40px;
-  overflow: auto;
-  // -ms-overflow-style: none;
-  // scrollbar-width: none;
+  // overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  // border: 2px solid $color-dark;
 }
 
-// .posts::-webkit-scrollbar {
-//   display: none;
-// }
+.posts::-webkit-scrollbar {
+  display: none;
+}
 
 .sidebar, .posts {
   background: $color-light;
   padding: 40px;
-  border: 1px solid $color-dark;
-  border-radius: 5px;
 }
 
 /* Logo */
+
+.logo-wrapper {
+  position: relative;
+  z-index: 1;
+}
 
 .logo {
   font-family: $font-logo;
@@ -84,7 +99,19 @@ body {
   font-size: 100px;
   line-height: 1;
   text-align: center;
-  margin: 40px 0;
+  padding-top: 80px;
+
+  span {
+    color: $color-focus;
+  }
+}
+
+.logo-wrapper img {
+  position: absolute;
+  left: 40%;
+  top: 0;
+  margin-top: 0;
+  z-index: -1;
 }
 
 /* Lists */
@@ -109,7 +136,12 @@ body {
   font-weight: 600;
   &:focus {
     color: $color-focus;
+    font-weight: bold;
   }
+}
+
+.tags {
+  padding-bottom: 15px;
 }
 
 /* Authors */
@@ -117,6 +149,7 @@ body {
 .authors {
   li {
     margin-bottom: 12px;
+    margin-bottom: 0;
   }
 }
 
@@ -146,4 +179,43 @@ body {
     padding-bottom: 30px;
   }
 }
+
+.post-title {
+  font-family: $font-header;
+  font-size: 30px;
+}
+
+/* Images */
+
+.images-container {
+  display: flex;
+  padding: 50px 0;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: $color-dark;
+  height: auto;
+  border-radius: 5px;
+}
+
+.images-container img {
+  width: 100%;
+  object-fit: cover;
+  background-color: $color-dark;
+}
+
+.image-box {
+  overflow: hidden;
+  background-color: $color-dark;
+}
+
+.box-1 {
+  padding-right: 10px;
+}
+
+.box-2 {
+  padding-left: 10px;
+}
+
 

@@ -1,221 +1,293 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald:400,600|Sacramento|Source+Sans+Pro:300&subset=latin-ext');
+@import url("https://fonts.googleapis.com/css?family=Oswald:400,600|Sacramento|Source+Sans+Pro:300&subset=latin-ext");
 
 /* Variables */
 
 $color-light: #fff;
 $color-dark: #000000;
 $color-vivid: #2a5924;
-$color-focus:  #3bfd37;
+$color-focus: #3bfd37;
 
-$font-logo: 'Oswald', sans-serif;
-$font-header: 'Alkalami', serif;
-$font-text: 'Source Sans Pro', sans-serif;
+$font-logo: "Oswald", sans-serif;
+$font-header: "Alkalami", serif;
+$font-text: "Source Sans Pro", sans-serif;
 
 /* Global */
 
-*, *::before, *::after {
-  box-sizing: border-box;
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
 body {
-  background: $color-light;
-  font-family: $font-text;
-  color: $color-dark;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 1.7;
+	background: $color-light;
+	font-family: $font-text;
+	color: $color-dark;
+	font-weight: 300;
+	font-size: 16px;
+	line-height: 1.7;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 .container {
-  max-width: 90vw;
-  margin: 0 auto;
+	max-width: 100vw;
+	margin: 0 auto;
 }
 
 .section-title {
-  font-size: 20px;
-  text-transform: uppercase;
-  font-family: $font-header;
-  font-weight: 600;
-  span {
-    text-transform: none;
-    font-weight: 400;
-    color: lighten($color-dark, 20%);
-  }
+	font-size: 20px;
+	text-transform: uppercase;
+	font-family: $font-header;
+	font-weight: 600;
+	span {
+		text-transform: none;
+		font-weight: 400;
+		color: lighten($color-dark, 20%);
+	}
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 article {
-  padding-bottom: 50px;
+	padding-bottom: 50px;
 }
 
 /* Layout */
 
 .wrapper {
-  display: flex;
-  margin-left: 10px;
-  padding-bottom: 50px;
+	display: flex;
+	margin-left: 10px;
+	padding-bottom: 50px;
 }
 
 .sidebar {
-  flex: 1 0 0;
+	flex: 1 0 0;
 }
 
 .posts {
-  flex: 6 0 0;
-  position: relative;
-  padding: 40px;
-  // overflow: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  // border: 2px solid $color-dark;
+	flex: 6 0 0;
+	position: relative;
+	padding: 40px;
+	// overflow: auto;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	// border: 2px solid $color-dark;
 }
 
 .posts::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
-.sidebar, .posts {
-  background: $color-light;
-  padding: 40px;
+.sidebar,
+.posts {
+	background: $color-light;
+	padding: 40px;
 }
 
 /* Logo */
 
 .logo-wrapper {
-  position: relative;
-  z-index: 1;
+	position: relative;
+	z-index: 1;
 }
 
 .logo {
-  font-family: $font-logo;
-  font-weight: bold;
-  font-size: 100px;
-  line-height: 1;
-  text-align: center;
-  padding-top: 80px;
+	font-family: $font-logo;
+	font-weight: bold;
+	font-size: 92px;
+	line-height: 1;
+	text-align: center;
+	padding-top: 80px;
 
-  span {
-    color: $color-focus;
-  }
+	span {
+		color: $color-focus;
+	}
 }
 
 .logo-wrapper img {
-  position: absolute;
-  left: 40%;
-  top: 0;
-  margin-top: 0;
-  z-index: -1;
+	position: absolute;
+	left: 40%;
+	top: 0;
+	margin-top: 0;
+	z-index: -1;
 }
 
 /* Lists */
 
 .list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  .active {
-    font-weight: bold;
-  }
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	.active {
+		font-weight: bold;
+	}
 }
 
 .list-horizontal {
-  li {
-    display: inline-block;
-  }
+	li {
+		display: inline-block;
+	}
 }
 
 .list a {
-  color: $color-vivid;
-  font-weight: 600;
-  &:focus {
-    color: $color-focus;
-    font-weight: bold;
-  }
+	color: $color-vivid;
+	font-weight: 600;
+	&:focus {
+		color: $color-focus;
+		font-weight: bold;
+	}
 }
 
 .tags {
-  padding-bottom: 15px;
+	padding-bottom: 15px;
 }
 
 /* Authors */
 
 .authors {
-  li {
-    margin-bottom: 12px;
-    margin-bottom: 0;
-  }
+	li {
+		margin-bottom: 12px;
+		margin-bottom: 0;
+	}
 }
 
 /* Post */
 
 .post {
-  position: absolute;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.7s linear;
-  z-index: 1;
-  margin-right: 20px;
-  &.active {
-    visibility: visible;
-    opacity: 1;
-    z-index: 2;
-  }
+	position: absolute;
+	opacity: 0;
+	transition: visibility 0s, opacity 0.7s linear;
+	z-index: 1;
+	margin-right: 20px;
+	&.active {
+		visibility: visible;
+		opacity: 1;
+		z-index: 2;
+	}
 }
 
 .post-author {
-  font-style: italic;
+	font-style: italic;
 }
 
 .post-tags {
-  display: flex;
-  p {
-    margin: 0 10px 0 0;
-    padding-bottom: 30px;
-  }
+	display: flex;
+	p {
+		margin: 0 10px 0 0;
+		padding-bottom: 30px;
+	}
 }
 
 .post-title {
-  font-family: $font-header;
-  font-size: 30px;
+	font-family: $font-header;
+	font-size: 30px;
 }
 
 /* Images */
 
 .images-container {
-  display: flex;
-  padding: 50px 0;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background-color: $color-dark;
-  height: auto;
-  border-radius: 5px;
+	display: flex;
+	padding: 50px 0;
+	margin: 0 auto;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background-color: $color-dark;
+	height: auto;
+	border-radius: 5px;
 }
 
 .images-container img {
-  width: 100%;
-  object-fit: cover;
-  background-color: $color-dark;
+	width: 100%;
+	object-fit: cover;
+	background-color: $color-dark;
 }
 
 .image-box {
-  overflow: hidden;
-  background-color: $color-dark;
+	overflow: hidden;
+	background-color: $color-dark;
 }
 
 .box-1 {
-  padding-right: 10px;
+	padding-right: 10px;
 }
 
 .box-2 {
-  padding-left: 10px;
+	padding-left: 10px;
 }
 
+@media screen and (max-width: 768px) {
+	.sidebar {
+		display: none;
+	}
 
+	.logo {
+		font-size: 50px;
+		word-spacing: 100vw;
+		text-align: left;
+		padding: 0;
+	}
+
+	.logo-wrapper img {
+		width: 300px;
+	}
+
+	.post {
+		margin: 0;
+		width: 100vw;
+		padding: 0;
+		border: 2px solid red;
+	}
+	section {
+		border: 2px solid yellow;
+		// margin-left: 10px;
+	}
+
+	.wrapper {
+		margin: 0;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+	.logo {
+		font-size: 58px;
+	}
+
+	.logo-wrapper img {
+		width: 170px;
+	}
+
+	.sidebar {
+		padding: 0;
+
+		h2 {
+			font-size: 16px;
+		}
+	}
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+	.logo {
+		font-size: 75px;
+	}
+
+	.logo-wrapper img {
+		width: 200px;
+	}
+}
+
+@media (max-width: 1200px) {
+	.images-container {
+		flex-direction: column;
+	}
+
+	.box-1,
+	.box-2 {
+		padding: 0;
+	}
+}

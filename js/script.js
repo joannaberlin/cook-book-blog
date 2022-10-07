@@ -39,6 +39,9 @@ const optTitleSelector = '.post-title';
 const optTitleListSelector = '.titles';
 const optArticleTagsSelector = '.post-tags .list';
 const optArticleAuthorSelector = '.post-author';
+const optTagsListSelector = '.tags';
+const optCloudClassCount = 5;
+const optCloudClassPrefix = 'tag-size-';
 
 function generateTitleLinks(customSelector = '') {
   const titleList = document.querySelector(optTitleListSelector);
@@ -80,7 +83,38 @@ function generateTitleLinks(customSelector = '') {
 
 generateTitleLinks();
 
+function calculateTagsParams(tags) {
+  //znalezienie najmniejszej i największej liczby wystąpień
+  //te dwie liczby mają zostać zwrócone w postaci obiektu, który będzie zawierał dwa klucze: max i min
+  //!! ma zwracać największą i najmniejszą liczbę wystąpień TEGO SAMEGO tagu (???) - nie rozumiem
+
+  console.log('tags:', tags);
+  const calculatedParams = {};
+  const paramsArray = [];
+  //iterate over tags
+  for (let tag in tags){
+    const tagParam = tags[tag];
+    console.log(tagParam);
+    paramsArray.push(tagParam);
+  }
+  const minParam = Math.min(...paramsArray);
+  const maxParam = Math.max(...paramsArray);
+  console.log(minParam, maxParam);
+  calculatedParams.min = minParam;
+  calculatedParams.max = maxParam;
+  console.log(calculatedParams);
+  return calculatedParams;
+}
+
+function calculateTagClass(count, params) {
+  console.log('count:', count);
+  const classNumber = Math.floor( ( (count - params.min) / (params.max - params.min) ) * optCloudClassCount + 1 );
+  return optCloudClassPrefix + classNumber;
+}
+
 function generateTags(){
+  /* [NEW] create a new variable allTags with an empty object */
+  let allTags = {};
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
   /* START LOOP: for every article: */
@@ -98,6 +132,14 @@ function generateTags(){
       const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>' + ' ';
       /* add generated code to html variable */
       html = html + linkHTML;
+
+      /* [NEW] check if this link is NOT already in allTags */
+      if(!allTags.hasOwnProperty(tag)){
+        /* [NEW] add generated code to allTags object */
+        allTags[tag] = 1;
+      } else {
+        allTags[tag]++;
+      }
       /* END LOOP: for each tag */
       // console.log('tagLink:', linkHTML);
     }
@@ -105,6 +147,24 @@ function generateTags(){
     tagsWrapper.insertAdjacentHTML('afterbegin', html);
   /* END LOOP: for every article: */
   }
+  /* [NEW] find list of tags in right column */
+  // const tagList = document.querySelector('.list .tags');
+  const tagList = document.querySelector(optTagsListSelector);
+
+  const tagsParams = calculateTagsParams(allTags);
+  console.log('tagsParams:', tagsParams);
+  /* [NEW] create variable for all links HTML code */
+  let allTagsHTML = '';
+
+  /* [NEW] START LOOP: for each tag in allTags: */
+  for (let tag in allTags){
+  /* [NEW] generate code of a link and add it to allTagsHTML */
+    allTagsHTML += '<a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + ' ' + '</a>';
+    console.log(allTags);
+  }
+  /* [NEW] END LOOP: for each tag in allTags: */
+  /* [NEW] add html from allTagsHTML to tagList */
+  tagList.innerHTML = allTagsHTML;
 }
 
 generateTags();

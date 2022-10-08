@@ -42,6 +42,7 @@ const optArticleAuthorSelector = '.post-author';
 const optTagsListSelector = '.tags';
 const optCloudClassCount = 5;
 const optCloudClassPrefix = 'tag-size-';
+const optAuthorsListSelector = '.authors';
 
 function generateTitleLinks(customSelector = '') {
   const titleList = document.querySelector(optTitleListSelector);
@@ -88,26 +89,24 @@ function calculateTagsParams(tags) {
   //te dwie liczby mają zostać zwrócone w postaci obiektu, który będzie zawierał dwa klucze: max i min
   //!! ma zwracać największą i najmniejszą liczbę wystąpień TEGO SAMEGO tagu (???) - nie rozumiem
 
-  console.log('tags:', tags);
+  // console.log('tags:', tags);
   const calculatedParams = {};
   const paramsArray = [];
   //iterate over tags
   for (let tag in tags){
     const tagParam = tags[tag];
-    console.log(tagParam);
     paramsArray.push(tagParam);
   }
   const minParam = Math.min(...paramsArray);
   const maxParam = Math.max(...paramsArray);
-  console.log(minParam, maxParam);
+
   calculatedParams.min = minParam;
   calculatedParams.max = maxParam;
-  console.log(calculatedParams);
+
   return calculatedParams;
 }
 
 function calculateTagClass(count, params) {
-  console.log('count:', count);
   const classNumber = Math.floor( ( (count - params.min) / (params.max - params.min) ) * optCloudClassCount + 1 );
   return optCloudClassPrefix + classNumber;
 }
@@ -152,7 +151,6 @@ function generateTags(){
   const tagList = document.querySelector(optTagsListSelector);
 
   const tagsParams = calculateTagsParams(allTags);
-  console.log('tagsParams:', tagsParams);
   /* [NEW] create variable for all links HTML code */
   let allTagsHTML = '';
 
@@ -160,7 +158,6 @@ function generateTags(){
   for (let tag in allTags){
   /* [NEW] generate code of a link and add it to allTagsHTML */
     allTagsHTML += '<a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + ' ' + '</a>';
-    console.log(allTags);
   }
   /* [NEW] END LOOP: for each tag in allTags: */
   /* [NEW] add html from allTagsHTML to tagList */
@@ -206,11 +203,16 @@ function addClickListenersToTags(){
   /* find all links to tags */
   const links = document.querySelectorAll('.post-tags a');
   /* START LOOP: for each link */
+  const linksList = document.querySelectorAll('.tags a');
 
   for (let link of links) {
     /* add tagClickHandler as event listener for that link */
     link.addEventListener('click', tagClickHandler);
     /* END LOOP: for each link */
+  }
+
+  for (let link of linksList) {
+    link.addEventListener('click', tagClickHandler);
   }
 }
 
@@ -219,6 +221,11 @@ addClickListenersToTags();
 function generateAuthors() {
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
+  /* [NEW] find list of authors in right column */
+  const authorsList = document.querySelector(optAuthorsListSelector);
+  let allArticlesAuthors = {};
+  let allAuthorsHTML = '';
+
   /* START LOOP: for every article: */
   for (let article of articles) {
     /* find authors name wrapper */
@@ -227,6 +234,12 @@ function generateAuthors() {
     let html = '';
     /* get author name from data-author attribute */
     const articleAuthor = article.getAttribute('data-author');
+
+    if(!allArticlesAuthors.hasOwnProperty(articleAuthor)){
+      allArticlesAuthors[articleAuthor] = 1;
+    } else {
+      allArticlesAuthors[articleAuthor]++;
+    }
     /* generate HTML of the link */
     const linkHTML = '<a href="#author-' + articleAuthor + '">' + 'by ' + articleAuthor + '</a>';
     // console.log(linkHTML);
@@ -234,7 +247,11 @@ function generateAuthors() {
     html = html + linkHTML;
     /* insert HTML of all the links into the tags wrapper */
     authorsWrapper.insertAdjacentHTML('afterbegin', html);
-  /* END LOOP: for every article: */
+    /* END LOOP: for every article: */
+  }
+  for (let author in allArticlesAuthors) {
+    allAuthorsHTML = '<li><a href="#author-' + author + '">' + author + ' (' + allArticlesAuthors[author] + ') ' + '</a></li>';
+    authorsList.innerHTML += allAuthorsHTML;
   }
 }
 
@@ -275,11 +292,17 @@ function authorClickHandler(event) {
 function addClickListenersToAuthors() {
   /* find all links to authors */
   const links = document.querySelectorAll('.post-author a');
+
+  const linksList = document.querySelectorAll('.authors a');
   /* START LOOP: for each link */
   for (let link of links) {
     /* add tagClickHandler as event listener for that link */
     link.addEventListener('click', authorClickHandler);
     /* END LOOP: for each link */
+  }
+
+  for (let link of linksList) {
+    link.addEventListener('click', authorClickHandler);
   }
 }
 

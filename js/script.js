@@ -34,23 +34,25 @@ function titleClickHandler(event) {
   targetArticle.classList.add('active');
 }
 
-const optArticleSelector = '.post';
-const optTitleSelector = '.post-title';
-const optTitleListSelector = '.titles';
-const optArticleTagsSelector = '.post-tags .list';
-const optArticleAuthorSelector = '.post-author';
-const optTagsListSelector = '.tags';
-const optCloudClassCount = 5;
-const optCloudClassPrefix = 'tag-size-';
-const optAuthorsListSelector = '.authors';
+const opts = {
+  articleSelector: '.post',
+  titleSelector: '.post-title',
+  titleListSelector: '.titles',
+  articleTagsSelector: '.post-tags .list',
+  articleAuthorSelector: '.post-author',
+  tagsListSelector: '.tags',
+  cloudClassCount: 5,
+  cloudClassPrefix: 'tag-size-',
+  authorsListSelector: '.authors',
+};
 
 function generateTitleLinks(customSelector = '') {
-  const titleList = document.querySelector(optTitleListSelector);
+  const titleList = document.querySelector(opts.titleListSelector);
   /* remove contents of titleList */
   titleList.innerHTML = '';
 
   /* find all the articles and save them to variable: articles */
-  const articles = document.querySelectorAll(optArticleSelector + customSelector);
+  const articles = document.querySelectorAll(opts.articleSelector + customSelector);
   // console.log('customSelector:', customSelector);
 
   let html = '';
@@ -61,7 +63,7 @@ function generateTitleLinks(customSelector = '') {
 
     /* find the title element */
     /* get the title from the title element */
-    const articleTitle = article.querySelector(optTitleSelector).innerHTML;
+    const articleTitle = article.querySelector(opts.titleSelector).innerHTML;
     /* create HTML of the link */
     const linkHTML =
 			'<li><a href="#' +
@@ -107,19 +109,19 @@ function calculateTagsParams(tags) {
 }
 
 function calculateTagClass(count, params) {
-  const classNumber = Math.floor( ( (count - params.min) / (params.max - params.min) ) * optCloudClassCount + 1 );
-  return optCloudClassPrefix + classNumber;
+  const classNumber = Math.floor( ( (count - params.min) / (params.max - params.min) ) * opts.cloudClassCount + 1 );
+  return opts.cloudClassPrefix + classNumber;
 }
 
 function generateTags(){
   /* [NEW] create a new variable allTags with an empty object */
   let allTags = {};
   /* find all articles */
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(opts.articleSelector);
   /* START LOOP: for every article: */
   for (let article of articles) {
     /* find tags wrapper */
-    const tagsWrapper = article.querySelector(optArticleTagsSelector);
+    const tagsWrapper = article.querySelector(opts.articleTagsSelector);
     /* make html variable with empty string */
     let html = '';
     /* get tags from data-tags attribute */
@@ -148,7 +150,7 @@ function generateTags(){
   }
   /* [NEW] find list of tags in right column */
   // const tagList = document.querySelector('.list .tags');
-  const tagList = document.querySelector(optTagsListSelector);
+  const tagList = document.querySelector(opts.tagsListSelector);
 
   const tagsParams = calculateTagsParams(allTags);
   /* [NEW] create variable for all links HTML code */
@@ -220,16 +222,16 @@ addClickListenersToTags();
 
 function generateAuthors() {
   /* find all articles */
-  const articles = document.querySelectorAll(optArticleSelector);
+  const articles = document.querySelectorAll(opts.articleSelector);
   /* [NEW] find list of authors in right column */
-  const authorsList = document.querySelector(optAuthorsListSelector);
+  const authorsList = document.querySelector(opts.authorsListSelector);
   let allArticlesAuthors = {};
   let allAuthorsHTML = '';
 
   /* START LOOP: for every article: */
   for (let article of articles) {
     /* find authors name wrapper */
-    const authorsWrapper = article.querySelector(optArticleAuthorSelector);
+    const authorsWrapper = article.querySelector(opts.articleAuthorSelector);
     /* make html variable with empty string */
     let html = '';
     /* get author name from data-author attribute */

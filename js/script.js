@@ -1,9 +1,9 @@
 const templates = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
   tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
-  authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
+  mealLink: Handlebars.compile(document.querySelector('#template-meal-link').innerHTML),
   tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
-  authorLinkList: Handlebars.compile(document.querySelector('#template-author-link-list').innerHTML)
+  mealLinkList: Handlebars.compile(document.querySelector('#template-meal-link-list').innerHTML)
 };
 'use strict';
 
@@ -46,11 +46,11 @@ const opts = {
   titleSelector: '.post-title',
   titleListSelector: '.titles',
   articleTagsSelector: '.post-tags .list',
-  articleAuthorSelector: '.post-author',
+  mealTypeSelector: '.post-meal',
   tagsListSelector: '.tags',
   cloudClassCount: 5,
   cloudClassPrefix: 'tag-size-',
-  authorsListSelector: '.authors',
+  mealsListSelector: '.meals',
 };
 
 function generateTitleLinks(customSelector = '') {
@@ -94,10 +94,9 @@ function calculateTagsParams(tags) {
   //te dwie liczby mają zostać zwrócone w postaci obiektu, który będzie zawierał dwa klucze: max i min
   //!! ma zwracać największą i najmniejszą liczbę wystąpień TEGO SAMEGO tagu (???) - nie rozumiem
 
-  // console.log('tags:', tags);
   const calculatedParams = {};
   const paramsArray = [];
-  //iterate over tags
+
   for (let tag in tags){
     const tagParam = tags[tag];
     paramsArray.push(tagParam);
@@ -199,7 +198,6 @@ function tagClickHandler(event){
   }
   /* find all tag links with "href" attribute equal to the "href" constant */
   const allClickedTags = document.querySelectorAll('a[href="' + href + '"]');
-  // console.log(allClickedTags);
   /* START LOOP: for each found tag link */
   for (let clickedTag of allClickedTags) {
   /* add class active */
@@ -229,50 +227,50 @@ function addClickListenersToTags(){
 
 addClickListenersToTags();
 
-function generateAuthors() {
+function generateMeals() {
   /* find all articles */
   const articles = document.querySelectorAll(opts.articleSelector);
-  /* [NEW] find list of authors in right column */
-  const authorsList = document.querySelector(opts.authorsListSelector);
-  let allArticlesAuthors = {};
+  /* [NEW] find list of meals in right column */
+  const mealsList = document.querySelector(opts.mealsListSelector);
+  let allMeals = {};
 
   /* START LOOP: for every article: */
   for (let article of articles) {
-    /* find authors name wrapper */
-    const authorsWrapper = article.querySelector(opts.articleAuthorSelector);
+    /* find meals name wrapper */
+    const mealsWrapper = article.querySelector(opts.mealTypeSelector);
     /* make html variable with empty string */
     let html = '';
-    /* get author name from data-author attribute */
-    const articleAuthor = article.getAttribute('data-author');
+    /* get meal name from data-meal attribute */
+    const mealType = article.getAttribute('data-meal');
 
-    if(!allArticlesAuthors.hasOwnProperty(articleAuthor)){
-      allArticlesAuthors[articleAuthor] = 1;
+    if(!allMeals.hasOwnProperty(mealType)){
+      allMeals[mealType] = 1;
     } else {
-      allArticlesAuthors[articleAuthor]++;
+      allMeals[mealType]++;
     }
     /* generate HTML of the link */
-    const linkHTMLData = {id: articleAuthor, name: articleAuthor};
-    const linkHTML = templates.authorLink(linkHTMLData);
+    const linkHTMLData = {id: mealType, name: mealType};
+    const linkHTML = templates.mealLink(linkHTMLData);
     /* add generated code to html variable */
     html = html + linkHTML;
     /* insert HTML of all the links into the tags wrapper */
-    authorsWrapper.insertAdjacentHTML('afterbegin', html);
+    mealsWrapper.insertAdjacentHTML('afterbegin', html);
     /* END LOOP: for every article: */
   }
-  const allAuthorsData = {authors: []};
+  const allMealsData = {meals: []};
 
-  for (let author in allArticlesAuthors) {
-    allAuthorsData.authors.push({
-      author: author,
-      count: allArticlesAuthors[author]
+  for (let meal in allMeals) {
+    allMealsData.meals.push({
+      meal: meal,
+      count: allMeals[meal]
     });
-    authorsList.innerHTML = templates.authorLinkList(allAuthorsData);
+    mealsList.innerHTML = templates.mealLinkList(allMealsData);
   }
 }
 
-generateAuthors();
+generateMeals();
 
-function authorClickHandler(event) {
+function mealClickHandler(event) {
 /* prevent default action for this event */
   event.preventDefault();
   /* make new constant named "clickedElement" and give it the value of "this" */
@@ -282,9 +280,9 @@ function authorClickHandler(event) {
   /* make a new constant "href" and read the attribute "href" of the clicked element */
   const href = clickedElement.getAttribute('href');
   /* make a new constant "tag" and extract tag from the "href" constant */
-  const tag =  href.replace('#author-', '');
+  const tag =  href.replace('#meal-', '');
   /* find all tag links with class active */
-  const activeTagLinks = document.querySelectorAll('a.active[href^="#author-"]');
+  const activeTagLinks = document.querySelectorAll('a.active[href^="#meal-"]');
   /* START LOOP: for each active tag link */
   for (let tagLink of activeTagLinks) {
     /* remove class active */
@@ -301,24 +299,24 @@ function authorClickHandler(event) {
     /* END LOOP: for each found tag link */
   }
   /* execute function "generateTitleLinks" with article selector as argument */
-  generateTitleLinks('[data-author="' + tag + '"]');
+  generateTitleLinks('[data-meal="' + tag + '"]');
 }
 
-function addClickListenersToAuthors() {
-  /* find all links to authors */
-  const links = document.querySelectorAll('.post-author a');
+function addClickListenersToMeals() {
+  /* find all links to meals */
+  const links = document.querySelectorAll('.post-meal a');
 
-  const linksList = document.querySelectorAll('.authors a');
+  const linksList = document.querySelectorAll('.meals a');
   /* START LOOP: for each link */
   for (let link of links) {
     /* add tagClickHandler as event listener for that link */
-    link.addEventListener('click', authorClickHandler);
+    link.addEventListener('click', mealClickHandler);
     /* END LOOP: for each link */
   }
 
   for (let link of linksList) {
-    link.addEventListener('click', authorClickHandler);
+    link.addEventListener('click', mealClickHandler);
   }
 }
 
-addClickListenersToAuthors();
+addClickListenersToMeals();

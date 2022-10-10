@@ -51,6 +51,12 @@ html {
 
 a {
 	text-decoration: none;
+	color: $color-vivid;
+	font-weight: 600;
+	&:focus {
+		color: $color-focus;
+		font-weight: bold;
+	}
 }
 
 li {
@@ -67,16 +73,20 @@ article {
 	display: flex;
 	margin-left: 10px;
 	padding-bottom: 50px;
+	height: 100vh;
 }
 
 .sidebar {
 	flex: 1 0 0;
+	align-self: flex-start;
+	position: sticky;
+	top: 0;
 }
 
 .posts {
 	flex: 6 0 0;
 	position: relative;
-	padding: 40px;
+	// padding: 40px;
 	// overflow: auto;
 	-ms-overflow-style: none;
 	scrollbar-width: none;
@@ -85,12 +95,6 @@ article {
 
 .posts::-webkit-scrollbar {
 	display: none;
-}
-
-.sidebar,
-.posts {
-	background: $color-light;
-	padding: 40px;
 }
 
 /* Logo */
@@ -103,10 +107,16 @@ article {
 .logo {
 	font-family: $font-logo;
 	font-weight: bold;
-	font-size: 92px;
 	line-height: 1;
 	text-align: center;
-	padding-top: 80px;
+
+	h2 {
+		font-size: 50px;
+	}
+
+	h1 {
+		font-size: 78px;
+	}
 
 	span {
 		color: $color-focus;
@@ -115,8 +125,8 @@ article {
 
 .logo-wrapper img {
 	position: absolute;
-	left: 40%;
-	top: 0;
+	left: 25%;
+	top: 20%;
 	margin-top: 0;
 	z-index: -1;
 }
@@ -138,26 +148,12 @@ article {
 	}
 }
 
-.list a {
-	color: $color-vivid;
-	font-weight: 600;
-	&:focus {
-		color: $color-focus;
-		font-weight: bold;
-	}
-}
-
 .tags {
 	padding-bottom: 15px;
 }
 
-/* Authors */
-
-.authors {
-	li {
-		margin-bottom: 12px;
-		margin-bottom: 0;
-	}
+.tags li {
+	display: inline;
 }
 
 /* Post */
@@ -175,21 +171,42 @@ article {
 	}
 }
 
-.post-author {
-	font-style: italic;
+.post-content {
+	padding: 30px 0;
+}
+
+.post-meal-type {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	p {
+		margin: 0 10px 0 0;
+	}
 }
 
 .post-tags {
 	display: flex;
+	align-items: center;
+	justify-content: center;
 	p {
 		margin: 0 10px 0 0;
-		padding-bottom: 30px;
 	}
 }
 
 .post-title {
 	font-family: $font-header;
 	font-size: 30px;
+}
+
+.title-tags-wrapper {
+	text-align: center;
+
+	hr {
+		background-color: $color-dark;
+		border: 0 none;
+		height: 0.5px;
+		color: $color-dark;
+	}
 }
 
 /* Images */
@@ -225,56 +242,6 @@ article {
 	padding-left: 10px;
 }
 
-@media screen and (max-width: 768px) {
-	.sidebar {
-		display: none;
-	}
-
-	.logo {
-		font-size: 50px;
-		word-spacing: 100vw;
-		text-align: left;
-		padding: 0;
-	}
-
-	.logo-wrapper img {
-		width: 300px;
-	}
-
-	.post {
-		margin: 0;
-		width: 100vw;
-		padding: 0;
-		border: 2px solid red;
-	}
-	section {
-		border: 2px solid yellow;
-		// margin-left: 10px;
-	}
-
-	.wrapper {
-		margin: 0;
-	}
-}
-
-@media (min-width: 769px) and (max-width: 992px) {
-	.logo {
-		font-size: 58px;
-	}
-
-	.logo-wrapper img {
-		width: 170px;
-	}
-
-	.sidebar {
-		padding: 0;
-
-		h2 {
-			font-size: 16px;
-		}
-	}
-}
-
 /* Font sizes for tags */
 
 .tag-size-1 {
@@ -299,6 +266,51 @@ article {
 
 .tag-size-6 {
 	font-size: 26px;
+}
+
+@media screen and (max-width: 768px) {
+	.sidebar {
+		display: none;
+	}
+
+	.logo {
+		font-size: 50px;
+		word-spacing: 100vw;
+		text-align: left;
+		padding: 0;
+	}
+
+	.logo-wrapper img {
+		width: 300px;
+	}
+
+	.post {
+		margin: 0;
+		width: 100vw;
+		padding: 0;
+	}
+
+	.wrapper {
+		margin: 0;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+	.logo {
+		font-size: 58px;
+	}
+
+	.logo-wrapper img {
+		width: 170px;
+	}
+
+	.sidebar {
+		padding: 0;
+
+		h2 {
+			font-size: 16px;
+		}
+	}
 }
 
 @media (min-width: 993px) and (max-width: 1200px) {
